@@ -1,8 +1,7 @@
 %%
+run('Configuration.m');
+
 trial = 50;
-% % 
-filename = ['./Results/compare2_', num2str(trial),'.mat'];
-load(filename)
 
 lengt = 6;
 num_alg = 6;
@@ -12,15 +11,28 @@ timeAggr = zeros(num_alg,lengt);
 serAggr = zeros(num_alg,lengt);
 noiseAggr = zeros(num_alg,lengt);
 
-for algo_index = 1:num_alg
-    errorAggr(algo_index,:) = sum(error{algo_index,2}(:,:),2)/trial;
-    srrAggr(algo_index,:) = sum(supprecovery{algo_index,2}(:,:),2)/trial;
-    timeAggr(algo_index,:) = sum(time{algo_index,2}(:,:),2)/trial;
-    serAggr(algo_index,:) = sum(ser{algo_index,2}(:,:),2)/trial;
+for t = 1:trial
+    filename = ['./Results/ce_', num2str(t),'.mat'];
+    load(filename)
+    for algo_index = 1:num_alg
+        errorAggr(algo_index,:) = errorAggr(algo_index,:) + error(algo_index,:);
+        timeAggr(algo_index,:) = timeAggr(algo_index,:) + time(algo_index,:);
+        serAggr(algo_index,:) = serAggr(algo_index,:) + ser(algo_index,:);
+    end
 end
-for algo_index = [1,2,4]
-noiseAggr(algo_index,:) = sum(noise_var_error{algo_index,2}(:,:),2)/trial;
-end
+errorAggr = errorAggr/trial;
+timeAggr = timeAggr/trial;
+serAggr = serAggr/trial;
+
+% for algo_index = 1:num_alg
+%     errorAggr(algo_index,:) = sum(error{algo_index,2}(:,:),2)/trial;
+%     srrAggr(algo_index,:) = sum(supprecovery{algo_index,2}(:,:),2)/trial;
+%     timeAggr(algo_index,:) = sum(time{algo_index,2}(:,:),2)/trial;
+%     serAggr(algo_index,:) = sum(ser{algo_index,2}(:,:),2)/trial;
+% end
+% for algo_index = [1,2,4]
+% noiseAggr(algo_index,:) = sum(noise_var_error{algo_index,2}(:,:),2)/trial;
+% end
 %
 fontsizeman = 20;
           
@@ -99,7 +111,7 @@ legend('boxoff')
 
 xticks(SNRl)
 xlabel('SNR (dB)')
-ylabel('RMSE')
+ylabel('NMSE')
 
 % yyaxis right
 % fontsizemanlocal = 10;
