@@ -7,10 +7,7 @@ run('Configuration.m')
 for avg = 1 : AVG % for AVG trials
 
     % produce different realizations of channel
-%     run('channel_realization.m')
-
-    filename = ['./Results/compare2_', num2str(avg),'.mat'];
-    load(filename)
+    run('channel_realization.m')
 
     error = [];
     ser = [];
