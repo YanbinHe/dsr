@@ -5,7 +5,7 @@ for i = 1:K2
     Ht(:,:,i) = Htt(:,1:Res1);
     H_re(:,:,i) = kron(kron(Ht(:,:,i),conj(A1)),A2)*x_rel;
     Htrue(:,:,i) = vec(H2*diag(irs_pattern(:,i))*H1);
-    nmse(i) = norm(H_re(:,:,i) - Htrue(:,:,i),'fro')/norm(Htrue(:,:,i),'fro');
+    nmse(i) = (norm(H_re(:,:,i) - Htrue(:,:,i),'fro')/norm(Htrue(:,:,i),'fro'))^2;
 end
 error = sum(nmse)/K2
 end

@@ -1,7 +1,7 @@
 %%
 trial = 50;
 % % 
-filename = ['./Results/Results/compare2_', num2str(trial),'.mat'];
+filename = ['./Results/compare2_', num2str(trial),'.mat'];
 load(filename)
 
 lengt = 6;
