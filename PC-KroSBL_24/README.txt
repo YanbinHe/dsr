@@ -1,6 +1,8 @@
----------------------------------------------------
-Implementation for PC-KroSBL
----------------------------------------------------
+
 click main.m to start a new simulation
+
 or
-load PC-KroSBL.mat in main.m and use the functions in the end of main.m to obtain the plot in the paper
+
+unzip results.zip and put all the files under Results, and
+use figure_plot.m to reproduce all the figures and tables in the paper
+
