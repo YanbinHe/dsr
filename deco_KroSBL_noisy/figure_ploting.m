@@ -83,21 +83,21 @@ resultKaggre = zeros(7,3,length(K));
 resultNoise = zeros(5,length(SNR));
 
 
-for t = [1:35,37:52,54:99]
-    filename = ['./results/noisy_compare_', num2str(t),'.mat'];
+for t = 1:trials
+    filename = ['./results/noisy_compare2_', num2str(t),'.mat'];
     load(filename)
     for algo = 1:num_alg % for each algorithm
         metric = 1;
         for s = 1:length(SNR)
-            resultSaggre(algo,metric,s) = resultSaggre(algo,metric,s) + resultS{s}{algo,1}{metric,2}.^2;
+            resultSaggre(algo,metric,s) = resultSaggre(algo,metric,s) + resultS{s}{algo,1}{metric,2};
         end
 
         for m = 1:length(M1)
-            resultMaggre(algo,metric,m) = resultMaggre(algo,metric,m) + resultM{m}{algo,1}{metric,2}.^2;
+            resultMaggre(algo,metric,m) = resultMaggre(algo,metric,m) + resultM{m}{algo,1}{metric,2};
         end
 
         for k = 1:length(K)
-            resultKaggre(algo,metric,k) = resultKaggre(algo,metric,k) + resultK{k}{algo,1}{metric,2}.^2;
+            resultKaggre(algo,metric,k) = resultKaggre(algo,metric,k) + resultK{k}{algo,1}{metric,2};
         end
 
         metric = 3;
@@ -169,7 +169,7 @@ set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
 xlabel('SNR (dB)')
-ylabel('RMSE')
+ylabel('NMSE')
 % axis square
 
 h1 = plot(SNR,reshape(resultSaggre(1,metric,:),[6,1]),legend_type_set{1},'Color',all_colors(1, :),'Display',algo_name{1});
@@ -273,7 +273,7 @@ set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
 xlabel('Under-sampling ratio')
-ylabel('RMSE')
+ylabel('NMSE')
 % axis square
 
 h1 = plot(ratio,reshape(resultMaggre(1,metric,:),[7,1]),legend_type_set{1},'Color',all_colors(1, :),'Display',algo_name{1});
@@ -364,7 +364,7 @@ hold on
 legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},algo_name{5}},'Location','southeast','Interpreter','LaTex')
 
 xlabel('Sparsity level')
-ylabel('RMSE')
+ylabel('NMSE')
 % saveas(gcf,'deco4','epsc')
 % % create a new pair of axes inside current figure
 % axes('position',[.55 .2 .35 .4])
@@ -429,14 +429,10 @@ legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},alg
 % saveas(gcf,'deco5','epsc')
 %% plot computation time
 
-% k = 2, m = 2
-% that is K = 3, M = 8
-% using the results in resultS
-
 timeAggre = zeros(6,7);
 
 for t = 1:trials % for different independent runs
-    filename = ['./results/noisy_compare_', num2str(t),'.mat'];
+    filename = ['./results/noisy_compare2_', num2str(t),'.mat'];
     load(filename)
     for algo = 1:num_alg % for each algorithm
         for m = 1:length(M1)
